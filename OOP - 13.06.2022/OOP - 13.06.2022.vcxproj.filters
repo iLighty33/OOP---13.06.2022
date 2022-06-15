@@ -15,6 +15,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd">
+      <Filter>Исходные файлы</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="OOP 13 06 2022.cpp">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>

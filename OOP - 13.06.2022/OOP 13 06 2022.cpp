@@ -169,12 +169,12 @@ public:
 
 	void setBeepSignals(string beep1, string beep2)
 	{
-		beepSignal_[1] = beep1;
-		beepSignal_[2] = beep2;
+		beepSignal_[0] = beep1;
+		beepSignal_[1] = beep2;
 	}
 	string getBeepSignals() const
 	{
-		return beepSignal_[1] + " " + beepSignal_[2] + "\n";
+		return beepSignal_[0] + " " + beepSignal_[1] + "\n";
 	}
 
 
@@ -196,6 +196,8 @@ public:
 		return color_;
 	}
 
+	virtual void hasLights () = 0;
+
 private:
 	bool isMoving_ = 0;
 	string name_ = "";
@@ -215,8 +217,13 @@ public:
 	{
 		return needRefueling_;
 	}
+	virtual void hasLights (bool hasLights = true) {
+		hasLights_ = hasLights;
+		cout << "Has lights!" << "\n";
+	}
 private:
 	bool needRefueling_ = false;
+	bool hasLights_ = true;
 };
 
 class Muscular : virtual public Vehicle {
@@ -229,14 +236,18 @@ public:
 	{
 		return burnedColories_;
 	}
-
+	virtual void hasLights () {
+	
+		cout << "Doesn't have lights!" << "\n";
+	}
 private:
 	int burnedColories_ = 0;
+
 };
 
 class Electrical : public Motoric {
 public:
-	void setIsCharging(int isCharging)
+	void setIsCharging(int &isCharging)
 	{
 		isCharging_ = isCharging;
 	}
@@ -244,9 +255,13 @@ public:
 	{
 		return isCharging_;
 	}
-
+	virtual void hasLights (bool hasLights = true) {
+		hasLights_ = hasLights;
+		cout << "Has lights!" << "\n";
+	}
 private:
 	bool isCharging_ = false;
+	bool hasLights_ = false;
 };
 
 class Bensine : public Motoric {
@@ -259,8 +274,13 @@ public:
 	{
 		return fuelCapacity_;
 	}
+	virtual void hasLights (bool hasLights = true) {
+		hasLights_ = hasLights;
+		cout << "Has lights!" << "\n";
+	}
 private:
 	int fuelCapacity_ = 0;
+	bool hasLights_ = true;
 };
 
 class Bicycles : public Muscular {
@@ -268,6 +288,10 @@ public:
 	void setWheels(int wheels)
 	{
 		wheelsCounter_ = wheels;
+	}
+	virtual void hasLights () {
+
+		cout << "Doesn't have lights!" << "\n";
 	}
 private:
 	int wheelsCounter_ = 4;
@@ -283,13 +307,21 @@ public:
 	{
 		return transmitionType_;
 	}
+	virtual void hasLights (bool hasLights = true) {
+		hasLights_ = hasLights;
+		cout << "Has lights!" << "\n";
+	}
 private:
 	int transmitionType_ = 0;
+	bool hasLights_ = true;
 };
 
 class ElectroBicycles : public Motoric, public Muscular {
+
 public:
+
 private:
+	int kilometerCounter = 0;
 };
 
 class ElectroScooters : public Motoric, public Muscular {
@@ -299,6 +331,13 @@ private:
 
 int main()
 {
+
+	Scooter sc;
+	sc.setBeepSignals ("Beep", "Beep!");
+	string beepSignals = sc.getBeepSignals ();
+	std::cout << "Scooter goes: " << beepSignals;
+	sc.hasLights();
+
 
 	return 0;
 }
